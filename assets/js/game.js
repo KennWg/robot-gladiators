@@ -6,12 +6,13 @@ var playerMoney = 10;
 console.log(playerName, playerAttack, playerHealth);
 
 var enemyNames = ["Roborto", "Amy Android", "Robo Trumble"];
-var enemyHealth = 50;
 var enemyAttack = 12;
 
-//game states
-//win - when player has defeated all enemy robots
-//lose - when player hp hits 0
+//random number function
+var randomNumber = function(min, max) {
+    var value = Math.floor(Math.random() * (max - min + 1)) + min;
+    return value;
+}
 
 //fight function
 var fight = function(enemyName) {
@@ -25,7 +26,8 @@ var fight = function(enemyName) {
             if (promptFight === "fight" || promptFight === "FIGHT" || promptFight === "Fight") {
 
                 //subtract the value of playerAttack from value of enemyHealth and update enemyHealth variable
-                enemyHealth = enemyHealth - playerAttack;
+                var damage = randomNumber(playerAttack - 3, playerAttack);
+                enemyHealth = Math.max(0, enemyHealth - damage);
 
                 //log resulting message to console
                 console.log(
@@ -43,7 +45,8 @@ var fight = function(enemyName) {
                 }
 
                 //subtract the value of enemyAttack from value of playerHealth and update playerHealth variable
-                playerHealth = playerHealth - enemyAttack;
+                var damage = randomNumber(enemyAttack - 3, enemyAttack);
+                playerHealth = Math.max(0, playerHealth - damage);
 
                 //log resulting message to console
                 console.log(
@@ -71,7 +74,7 @@ var fight = function(enemyName) {
                 window.alert(playerName + " has chosen to skip the fight. Goodbye!");
                 
                 //Subtract money from player
-                playerMoney = playerMoney - 10;
+                playerMoney = Math.max(0, playerMoney - 10);
                 break;
             }
 
@@ -94,6 +97,8 @@ var startGame = function() {
     playerHealth = 100;
     playerAttack = 10;
     playerMoney = 10;
+
+    enemyHealth = randomNumber(40, 60);
 
     //fight loop
     for(var i = 0; i< enemyNames.length; i++) {
