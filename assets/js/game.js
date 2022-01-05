@@ -72,6 +72,7 @@ var fight = function(enemy) {
             //check enemy health
             if (enemy.health <= 0) {
                 window.alert(enemy.name + " has died!");
+                playerInfo.money += 10;
                 break;
             }
 
@@ -204,6 +205,23 @@ var endGame = function() {
     //if player alive
     if (playerInfo.health > 0) {
         window.alert("Great job, you've survived the game! You now have a score of " + playerInfo.money + ".");
+
+        //high score
+        var topScore = localStorage.getItem("topScore");
+        var topName = localStorage.getItem("name");
+
+        if (topScore === null) {
+            topScore = 0;
+        }
+
+        if (topScore < playerInfo.money) {
+            window.alert("Congratulations! You have beat the high score!")
+            localStorage.setItem("name", playerInfo.name);
+            localStorage.setItem("topScore", playerInfo.money);
+        }
+        else {
+            window.alert("Sorry, you didn't beat the high score. The top score is currently " + topScore + " by " + topName);
+        }
     }
     else {
         window.alert("You've lost your robot in battle.")
